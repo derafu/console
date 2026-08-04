@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   tests:
     name: Tests
-    timeout-minutes: 15
+    timeout-minutes: 10
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -27,7 +27,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: curl, json, mbstring, openssl, soap, xdebug, imap
+          extensions: mbstring, xdebug
           tools: composer
 
       - name: Display PHP version
