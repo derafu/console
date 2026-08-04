@@ -1,0 +1,11 @@
+parameters:
+    kernel.app_name: 'Derafu Console Fixture'
+    kernel.app_version: '9.9.9'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Derafu\TestsConsole\Fixture\GreetCommand: ~
