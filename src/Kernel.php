@@ -28,8 +28,20 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  *
  * Usage in bin/console:
  *
- *   $kernel = new Kernel($_ENV['APP_ENV'] ?? 'dev', (bool) ($_ENV['APP_DEBUG'] ?? true));
- *   exit($kernel->run());
+ *   use Derafu\Console\Kernel;
+ *   use Derafu\Console\Runtime;
+ *
+ *   exit(Runtime::run(fn (array $context): Kernel => new Kernel(
+ *       $context['APP_ENV'],
+ *       (bool) $context['APP_DEBUG'],
+ *   )));
+ *
+ * `Runtime::run()` is not optional convenience here: it resolves
+ * `APP_ENV`/`APP_DEBUG` from `$_SERVER` and `$_ENV` together, which reading
+ * `$_ENV` alone (e.g. `$_ENV['APP_ENV'] ?? 'dev'`) cannot do reliably —
+ * `$_ENV` is only populated when the `variables_order` php.ini directive
+ * includes `E`, which is not every PHP installation's default. See
+ * `Runtime` for details.
  *
  * Projects that already have their own Kernel (HTTP-based or otherwise)
  * should not extend this class. Instead, they should use
